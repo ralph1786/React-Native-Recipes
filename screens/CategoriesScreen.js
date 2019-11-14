@@ -1,16 +1,11 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity
-} from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryTile from "../components/CategoryTile";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../components/CustomHeaderButton";
 
 const CategoriesScreen = props => {
-  //   console.log(props);
   const renderGridItem = itemData => {
     return (
       <CategoryTile
@@ -46,8 +41,21 @@ const styles = StyleSheet.create({
   }
 });
 
-CategoriesScreen.navigationOptions = {
-  headerTitle: "Recipe Categories"
+CategoriesScreen.navigationOptions = navData => {
+  return {
+    headerTitle: "Recipe Categories",
+    headerLeft: (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Menu"
+          iconName="bars"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    )
+  };
 };
 
 export default CategoriesScreen;
