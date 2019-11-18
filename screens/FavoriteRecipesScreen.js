@@ -1,20 +1,27 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import RecipeList from "../components/RecipeList";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import CustomHeaderButton from "../components/CustomHeaderButton";
 
-const FavoriteRecipesScreen = () => {
-  return (
-    <View style={styles.screen}>
-      <Text>Favorite Recipes Screen</Text>
-    </View>
-  );
+const FavoriteRecipesScreen = props => {
+  return <RecipeList navigation={props.navigation} />;
 };
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  }
-});
+FavoriteRecipesScreen.navigationOptions = navData => {
+  return {
+    headerTitle: "My Favorites!",
+    headerLeft: (
+      <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+        <Item
+          title="Menu"
+          iconName="bars"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    )
+  };
+};
 
 export default FavoriteRecipesScreen;
