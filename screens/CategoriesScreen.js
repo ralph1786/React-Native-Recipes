@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, FlatList } from "react-native";
+import { FlatList } from "react-native";
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryTile from "../components/CategoryTile";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -32,14 +32,6 @@ const CategoriesScreen = props => {
     />
   );
 };
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  }
-});
 
 CategoriesScreen.navigationOptions = navData => {
   return {
