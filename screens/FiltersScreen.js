@@ -1,27 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { View, Text, StyleSheet, Switch, Platform } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/CustomHeaderButton";
-
-const FilterSwitch = props => {
-  return (
-    <View style={styles.filterContainer}>
-      <Text>{props.label}</Text>
-      <Switch
-        trackColor={{ true: "darkorange" }}
-        value={props.state}
-        onValueChange={props.onChangeHandler}
-        thumbColor={Platform.OS === "android" ? "#f5f5f5" : ""}
-      />
-    </View>
-  );
-};
+import { setFilters } from "../store/recipeActions";
+import { useDispatch } from "react-redux";
+import FilterSwitch from "../components/FilterSwitch";
 
 const FiltersScreen = ({ navigation }) => {
   const [isGlutenFree, setIsGlutenFree] = useState(false);
   const [isVegan, setIsVegan] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
   const [isLactoseFree, setIsLactoseFree] = useState(false);
+
+  const dispatch = useDispatch();
 
   const saveFilters = useCallback(() => {
     const appliedFilters = {
@@ -30,8 +21,8 @@ const FiltersScreen = ({ navigation }) => {
       vegetarian: isVegetarian,
       lactoseFree: isLactoseFree
     };
-    console.log(appliedFilters);
-  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian]);
+    dispatch(setFilters(appliedFilters));
+  }, [isGlutenFree, isLactoseFree, isVegan, isVegetarian, dispatch]);
 
   useEffect(() => {
     navigation.setParams({
@@ -70,13 +61,6 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     alignItems: "center"
-  },
-  filterContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "80%",
-    marginVertical: 15
   },
   title: {
     fontWeight: "bold",
